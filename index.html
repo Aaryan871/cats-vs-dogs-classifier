@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cats vs Dogs Classifier</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>🐱🐶 Cats vs Dogs Classifier</h1>
+
+        <form id="uploadForm">
+            <input type="file" id="fileInput" accept="image/*" required>
+            <label for="fileInput">Choose Image</label>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        <div class="preview">
+            <img id="previewImg" src="" alt="Preview">
+        </div>
+
+        <div class="result">
+            <h2 id="prediction">Prediction: ---</h2>
+        </div>
+    </div>
+
+<script>
+const fileInput = document.getElementById("fileInput");
+const previewImg = document.getElementById("previewImg");
+const form = document.getElementById("uploadForm");
+const predictionText = document.getElementById("prediction");
+previewImg.style.display = "block";
+
+// 🔥 Image Preview
+fileInput.addEventListener("change", function() {
+    const file = this.files[0];
+    if (file) {
+        previewImg.src = URL.createObjectURL(file);
+    }
+});
+
+// 🔥 Form Submit (Backend call)
+form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    predictionText.innerText = "Prediction: Loading...";
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/predict", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+        predictionText.innerText = "Prediction: " + data.prediction;
+
+    } catch (error) {
+        predictionText.innerText = "Error connecting to server";
+    }
+});
+</script>
+
+</body>
+</html>
