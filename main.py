@@ -84,7 +84,7 @@ def preprocess_image(image):
     image = np.array(image) / 255.0
     image = np.expand_dims(image, axis=0)
     return image
-
+# khdsfbbdsdf
 # 🔥 API
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
