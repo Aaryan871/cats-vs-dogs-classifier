@@ -103,3 +103,24 @@ async def predict(file: UploadFile = File(...)):
         result = random.choice(["Dog 🐶", "Cat 🐱"])
 
     return {"prediction": result} 
+
+
+
+#API FAllback code
+# @app.post("/predict")
+# async def predict(file: UploadFile = File(...)):
+#     contents = await file.read()
+#     image = Image.open(io.BytesIO(contents)).convert("RGB")
+
+#     processed_image = preprocess_image(image)
+
+#     # 🔥 If model loaded
+#     if model:
+#         prediction = model.predict(processed_image)[0][0]
+#         result = "Dog 🐶" if prediction > 0.5 else "Cat 🐱"
+#     else:
+#         # 🔥 fallback (random result to keep app working)
+#         import random
+#         result = random.choice(["Dog 🐶", "Cat 🐱"])
+
+#     return {"prediction": result} 
